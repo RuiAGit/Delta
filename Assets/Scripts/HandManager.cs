@@ -25,9 +25,10 @@ public class HandManager : MonoBehaviour {
 
     public void AddCardToHand(Card cardData) {
         GameObject newCard = Instantiate(cardPrefab, handTransform.position, Quaternion.identity, handTransform);
+        // newCard.transform.localScale = Vector3.one * 85;
         cardsInHand.Add(newCard);
-
-        newCard.GetComponent<CardDisplay>().cardData = cardData;
+        // Debug.Log(newCard.Find("CardCanvas").gameObject.GetComponentsInChildren<CardDisplay>());
+        newCard.GetComponentInChildren<CardDisplay>().cardData = cardData;
 
         UpdateHandVisuals();
     }

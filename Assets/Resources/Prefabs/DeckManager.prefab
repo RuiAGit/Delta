@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8347472028202415186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 929.9614, y: 475.03534, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
   allCards: []
-  startingHandSize: 1
+  startingHandSize: 5
   maxHandSize: 8
   currentHandSize: 0

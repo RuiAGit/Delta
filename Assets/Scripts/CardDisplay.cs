@@ -14,15 +14,18 @@ public class CardDisplay : MonoBehaviour {
     public Image cardImage;
 
     void Start() {
-        Debug.Log("eeeeeeeee");
         updateCardDisplay();
     }
 
     public void updateCardDisplay() {
         nameText.text = cardData.cardName;
         powerText.text = cardData.power.ToString();
-        costText.text = cardData.cost.ToString();
-        descriptionText.text = cardData.description;
+        if (costText != null) {
+            costText.text = cardData.cost.ToString();
+        }
+        if (descriptionText != null) {
+            descriptionText.text = cardData.description;
+        }
         cardImage.sprite = cardData.cardImage;
     }
 }

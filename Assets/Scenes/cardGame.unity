@@ -269,10 +269,10 @@ RectTransform:
   - {fileID: 53179328}
   m_Father: {fileID: 1802400664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -330}
-  m_SizeDelta: {x: 1320, y: 200}
+  m_SizeDelta: {x: -600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &397238762
 GameObject:
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c457a579fa6eff44871200a038db174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackFieldManager
-  cardPrefab: {fileID: 7067377914933773200, guid: 37961ccc88aa39e41b17ce47d981a169, type: 3}
+  cardPrefab: {fileID: 1826972712232909465, guid: a9822942d4ca5b849923f8b72c806af1, type: 3}
   attackFieldTransform: {fileID: 442548755}
   cardsInAttackField: []
   cardSpacing: 170
@@ -1210,7 +1210,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979480139}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

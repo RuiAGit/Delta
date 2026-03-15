@@ -23,14 +23,15 @@ public class AttackFieldManager : MonoBehaviour {
         
     }
 
-    public void MoveCardToAttackField(Card cardData) {
+    public void MoveCardToAttackField(GameObject card, Card cardData) {
         // instantiate a new card in the attack field and set its data
-        GameObject newCard = Instantiate(cardPrefab, attackFieldTransform.position, Quaternion.identity);
-        newCard.transform.SetParent(attackFieldTransform, false);
-        newCard.transform.localScale = Vector3.zero*85;
-        cardsInAttackField.Add(newCard);
+        // GameObject newCard = Instantiate(cardPrefab, attackFieldTransform.position, Quaternion.identity);
+        card.transform.SetParent(attackFieldTransform, false);
+        // newCard.transform.localScale = Vector3.zero*85;
+        cardsInAttackField.Add(card);
 
-        newCard.GetComponent<CardDisplay>().cardData = cardData;
+
+        card.GetComponentInChildren<CardDisplay>().cardData = cardData;
 
         UpdateAttackFieldVisuals();
     }

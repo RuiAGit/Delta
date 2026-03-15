@@ -38,7 +38,7 @@ public class PlayFieldManager : MonoBehaviour {
 
         cardsInPlayField.Add(card);
 
-        card.GetComponent<CardDisplay>().cardData = cardData;
+        card.GetComponentInChildren<CardDisplay>().cardData = cardData;
 
         UpdatePlayFieldVisuals();
     }
@@ -46,7 +46,6 @@ public class PlayFieldManager : MonoBehaviour {
     public void RemoveCardFromPlayField(GameObject card) {
         cardsInPlayField.Remove(card);
         cardOriginalTransforms.Remove(card);
-        Destroy(card);
         UpdatePlayFieldVisuals();
     }
 

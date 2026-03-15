@@ -30,7 +30,10 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     [SerializeField] private Vector2 cardPlay;
     [SerializeField] private Vector2 cardAttack;
     [SerializeField] private Vector3 showPosition;
-    [SerializeField] private GameObject highlightEffect;
+    [SerializeField] private GameObject normalCanvas;
+    [SerializeField] private GameObject smallCanvas;
+    [SerializeField] private GameObject normalHighlightEffect;
+    [SerializeField] private GameObject smallHighlightEffect;
     [SerializeField] private GameObject clickBlockerPrefab;
 
     void Awake() {
@@ -45,7 +48,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     void Update() {
-        Debug.Log("Current State: " + currentState);
+        // Debug.Log("Current State: " + currentState);
         switch (currentState) {
             case 0: // Normal
                 HandleNormalState();
@@ -71,7 +74,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     private void TransitionToState(int newState) {
         currentState = newState;
         if (newState == 0) {
-            highlightEffect.SetActive(false);
+            normalHighlightEffect.SetActive(false);
             if (clickBlocker != null) {
                 Destroy(clickBlocker);
                 clickBlocker = null;
@@ -81,7 +84,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             rectTransform.SetSiblingIndex(originalSiblingIndex);
         }
         else if (newState == 3) {
-            highlightEffect.SetActive(false);
+            normalHighlightEffect.SetActive(false);
         }
     }
 
@@ -170,7 +173,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     private void HandleHoverState() {
-        highlightEffect.SetActive(true);
+        normalHighlightEffect.SetActive(true);
         // Debug.Log(handManager.GetCardOriginalScale(rectTransform.gameObject));
         if (!isPlayed)
             rectTransform.localScale = handManager.GetCardOriginalScale(rectTransform.gameObject) * selectScale;
@@ -203,10 +206,10 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     private void HandlePlayState() {
-        highlightEffect.SetActive(false);
+        normalHighlightEffect.SetActive(false);
         
         if (!isPlayed) {
-            Card cardData = rectTransform.gameObject.GetComponent<CardDisplay>().cardData;
+            Card cardData = rectTransform.gameObject.GetComponentInChildren<CardDisplay>().cardData;
             handManager.RemoveCardFromHand(rectTransform.gameObject);
             playFieldManager.MoveCardToPlayField(rectTransform.gameObject, cardData);
             isPlayed = true;
@@ -229,7 +232,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             clickBlocker.transform.SetAsLastSibling();
             rectTransform.SetParent(canvas.transform);
             rectTransform.SetAsLastSibling();
-            highlightEffect.SetActive(false);
+            normalHighlightEffect.SetActive(false);
             cardBeingShown = true;
         }
         // Lerp every frame while in this state
@@ -239,12 +242,14 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
 
     private void HandleAttackState() {
-        highlightEffect.SetActive(false);
+        normalHighlightEffect.SetActive(false);
 
         if (!isAttacking) {
-            Card cardData = rectTransform.gameObject.GetComponent<CardDisplay>().cardData;
+            Card cardData = rectTransform.gameObject.GetComponentInChildren<CardDisplay>().cardData;
             playFieldManager.RemoveCardFromPlayField(rectTransform.gameObject);
-            attackFieldManager.MoveCardToAttackField(cardData);
+            normalCanvas.SetActive(false);
+            smallCanvas.SetActive(true);
+            attackFieldManager.MoveCardToAttackField(rectTransform.gameObject, cardData);
             isAttacking = true;
         }
 
