@@ -32,6 +32,7 @@ public class PlayFieldManager : MonoBehaviour {
     public void MoveCardToPlayField(GameObject card, Card cardData) {
         // Reparent the card from hand to playfield
         card.transform.SetParent(playFieldTransform, false);
+        card.transform.SetAsLastSibling(); // To force update render hierarchy
         card.transform.localPosition = Vector3.zero;
         card.transform.localRotation = Quaternion.identity;
         card.transform.localScale *= cardDownScale;

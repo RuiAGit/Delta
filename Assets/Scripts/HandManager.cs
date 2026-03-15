@@ -98,4 +98,9 @@ public class HandManager : MonoBehaviour {
         }
         return Vector3.one;
     }
+
+    // Get the current sibling index of a card in the hand
+    public int GetCardSiblingIndex(GameObject card) {
+        return cardsInHand.IndexOf(card);
+    }
 }

@@ -9,12 +9,18 @@ public class DeckManager : MonoBehaviour {
     public int startingHandSize = 5;
     public int maxHandSize = 8;
     public int currentHandSize = 0;
+    public int deckSize = 30;
+    private int currentDeckSize = 30;
     private int currentIndex = 0;
 
     void Start() {
-        Card[] cards = Resources.LoadAll<Card>("Cards");
+        List<Card> loadedCards = new List<Card>(Resources.LoadAll<Card>("Cards"));
 
-        allCards.AddRange(cards);
+        // Randomly select deckSize cards from loadedCards (with possible duplicates)
+        for (int i = 0; i < deckSize; i++) {
+            int randomIndex = Random.Range(0, loadedCards.Count);
+            allCards.Add(loadedCards[randomIndex]);
+        }
 
         HandManager hand = FindAnyObjectByType<HandManager>();
         for (int i = 0; i < startingHandSize; i++) {
@@ -23,11 +29,16 @@ public class DeckManager : MonoBehaviour {
     }
 
     public void DrawCard(HandManager handManager) {
-        if (allCards.Count == 0 || currentHandSize >= maxHandSize) return;
+        if (currentDeckSize <= 0 || currentHandSize >= maxHandSize) return;
 
         Card nexCard = allCards[currentIndex];
         handManager.AddCardToHand(nexCard);
         currentIndex = (currentIndex + 1) % allCards.Count;
         currentHandSize++;
+        currentDeckSize--;
+    }
+
+    public void RemoveCardFromHand() {
+        currentHandSize--;
     }
 }

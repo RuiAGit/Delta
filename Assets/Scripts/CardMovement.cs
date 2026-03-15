@@ -6,6 +6,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     
     private RectTransform rectTransform;
     private Canvas canvas;
+    private DeckManager deckManager;
     private HandManager handManager;
     private PlayFieldManager playFieldManager;
     private AttackFieldManager attackFieldManager;
@@ -13,7 +14,6 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     private GameObject playField;
     private Vector2 originalLocalPointerPosition;
     private Vector3 originalPanelLocalPosition;
-    private int originalSiblingIndex;
     private int currentState = 0;
     private int prevState = 0;
     private bool isDragging = false;
@@ -39,12 +39,12 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     void Awake() {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+        deckManager = FindAnyObjectByType<DeckManager>();
         handManager = GameObject.Find("HandManager").GetComponent<HandManager>();
         playFieldManager = GameObject.Find("PlayFieldManager").GetComponent<PlayFieldManager>();
         playFieldHighlightEffect = playFieldManager.playFieldTransform.Find("PlayFieldHighlight").gameObject;
         attackFieldManager = GameObject.Find("AttackFieldManager").GetComponent<AttackFieldManager>();
         attackFieldHighlightEffect = attackFieldManager.attackFieldTransform.Find("AttackFieldHighlight").gameObject;
-        originalSiblingIndex = transform.GetSiblingIndex();
     }
 
     void Update() {
@@ -81,7 +81,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             }
             cardBeingShown = false;
             rectTransform.SetParent(handManager.handTransform, false);
-            rectTransform.SetSiblingIndex(originalSiblingIndex);
+            rectTransform.SetSiblingIndex(handManager.GetCardSiblingIndex(rectTransform.gameObject));
         }
         else if (newState == 3) {
             normalHighlightEffect.SetActive(false);
@@ -211,6 +211,7 @@ public class CardMovement : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
         if (!isPlayed) {
             Card cardData = rectTransform.gameObject.GetComponentInChildren<CardDisplay>().cardData;
             handManager.RemoveCardFromHand(rectTransform.gameObject);
+            deckManager.RemoveCardFromHand();
             playFieldManager.MoveCardToPlayField(rectTransform.gameObject, cardData);
             isPlayed = true;
         }
